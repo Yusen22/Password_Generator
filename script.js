@@ -102,21 +102,26 @@ var fullPassword = ""
 // Function to prompt user for password options
 function getPasswordOptions() {
   passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
-  if (passwordLength < 10 && passwordLength > 0) {
+  if (passwordLength < 10) {
     alert("This password has too few characters. Try again!");
-    passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
+    getPasswordOptions()
   } else if (passwordLength > 64) {
     alert("This password has too many characters. Please enter another value.");
-    passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
+    reset();
+    getPasswordOptions();
+  } else if (isNaN(passwordLength)) {
+    alert("That's not a number! Please enter another value.");
+    reset();
+    getPasswordOptions();
   } else if (passwordLength === null) {
-    return;
-    
+    fullPassword = "Your secure password";
+    return
   }
   else {
     characterTypeSelect();
     if (fullCharSet.length < 1) {
       alert("You must select one character type. Please try again.");
-      return;
+      generatePassword();
     } else {
       alert("Your password will now be generated.")
     }
@@ -132,7 +137,7 @@ function characterTypeSelect() {
     var charTitle = listProperty.shift();
     var editedCharTitle = charTitle.replace(/[A-Z]/g, ' $&').trim().toLowerCase();
     // Code for decision on each character set and adding to fullCharSet array
-    var charDecision = confirm("Do you want to include " + editedCharTitle + " ?");
+    var charDecision = confirm("Do you want to include " + editedCharTitle + "?");
     if (charDecision === true) {
       fullCharSet = fullCharSet.concat(characters[i]);
       var capCharTitle =
@@ -155,14 +160,19 @@ var randomArrElement = function (arr) {
 
 // Function to generate password with user input using fullCharSet array
 function generatePassword() {
+  reset();
   getPasswordOptions();
   for (var x = 0; x <= passwordLength; x++) {
     fullPassword += randomArrElement(fullCharSet);
+  } if (fullPassword !== undefined) {
+    console.log(fullPassword);
+    return fullPassword;
+  } else {
+    return generatePassword();
   }
-  console.log(fullPassword);
-  return fullPassword;
-
 }
+
+// A function to reset arrays before reuse of application
 
 function reset() {
   passwordLength = 0;
@@ -182,8 +192,6 @@ function writePassword() {
   passwordText.value = password;
 }
 
-// Add event listener to reset password
-generateBtn.addEventListener('click', reset);
 
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword);
