@@ -103,7 +103,7 @@ function getPasswordOptions() {
     alert("This password has too many characters. Please enter another value.");
     passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
   } else if (passwordLength === null) {
-    return
+    return getPasswordOptions()
   }
   else {
     characterTypeSelect();
@@ -154,7 +154,7 @@ function generatePassword() {
     fullPassword += randomArrElement(fullCharSet);
   }
   console.log(fullPassword);
-  document.getElementById("password").innerHTML = fullPassword;
+  return fullPassword
 }
 
 // Get references to the #generate element
