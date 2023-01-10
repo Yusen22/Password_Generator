@@ -95,22 +95,31 @@ var characters = {
 
 // Function to prompt user for password options
 function getPasswordOptions() {
-  var passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
+  passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
   if (passwordLength < 10) {
     alert("This password has too few characters. Please enter another value.");
     passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
   } else if (passwordLength > 64) {
     alert("This password has too many characters. Please enter another value.");
     passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
-  } else {
+  }  else if (passwordLength === null) {
+      return
+    }
+   else {
     characterTypeSelect();
+    if (fullCharSet.length < 1) {
+      alert("You must select one character type. Please try again.");
+    } else {
+      alert("Your password will now be generated.")
+    }
   }
 }
 
 // Function for asking user about inclusion of different character types
-
+var passwordLength
 var fullCharSet = []
 var listProperty = Object.keys(characters);
+var fullPassword = ""
 
 
 function characterTypeSelect() {
@@ -141,7 +150,11 @@ var randomArrElement = function (arr) {
 // Function to generate password with user input
 function generatePassword() {
   getPasswordOptions();
-  randomArrElement(fullCharSet);
+  for (var x = 0; x <= passwordLength; x++) {
+   fullPassword += randomArrElement(fullCharSet);
+  }
+  console.log(fullPassword);
+  document.getElementById("password").innerHTML = fullPassword;
 }
 
 // Get references to the #generate element
