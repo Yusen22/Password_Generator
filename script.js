@@ -102,22 +102,21 @@ var fullPassword = ""
 // Function to prompt user for password options
 function getPasswordOptions() {
   passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
-  if (passwordLength < 10) {
+  if (passwordLength < 10 && passwordLength > 0) {
     alert("This password has too few characters. Try again!");
     getPasswordOptions()
   } else if (passwordLength > 64) {
     alert("This password has too many characters. Please enter another value.");
     reset();
     getPasswordOptions();
+  } else if (passwordLength === null) {
+    reset();
+    return;
   } else if (isNaN(passwordLength)) {
     alert("That's not a number! Please enter another value.");
     reset();
     getPasswordOptions();
-  } else if (passwordLength === null) {
-    fullPassword = "Your secure password";
-    return
-  }
-  else {
+  } else {
     characterTypeSelect();
     if (fullCharSet.length < 1) {
       alert("You must select one character type. Please try again.");
