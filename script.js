@@ -108,8 +108,9 @@ function getPasswordOptions() {
   } else if (passwordLength > 64) {
     alert("This password has too many characters. Please enter another value.");
     passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
-  } else if (passwordLength === undefined) {
-    return false;
+  } else if (passwordLength === null) {
+    return;
+    
   }
   else {
     characterTypeSelect();
@@ -163,6 +164,13 @@ function generatePassword() {
 
 }
 
+function reset() {
+  passwordLength = 0;
+  fullCharSet = [];
+  listProperty = Object.keys(characters);
+  fullPassword = "";
+}
+
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
 
@@ -173,6 +181,9 @@ function writePassword() {
 
   passwordText.value = password;
 }
+
+// Add event listener to reset password
+generateBtn.addEventListener('click', reset);
 
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword);
