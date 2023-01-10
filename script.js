@@ -88,28 +88,47 @@ var upperCasedCharacters = [
   'Z'
 ];
 
+var fullCharSet = []
+
 // Function to prompt user for password options
 function getPasswordOptions() {
-var passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.")
-if passwordLength < 10 {
-  alert("This password has too few characters. Please enter another value.")
-  passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.")
-} else if passwordLength > 64 {
-  alert("This password has too many characters. Please enter another value.")
+  {
+    var passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
+    if (passwordLength < 10) {
+      alert("This password has too few characters. Please enter another value.");
+      passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
+    } else if (passwordLength > 64) {
+      alert("This password has too many characters. Please enter another value.");
+      passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
+    } else {
+      characterTypeSelect(specialCharacters);
+      characterTypeSelect(numericCharacters);
+      characterTypeSelect(lowerCasedCharacters);
+      characterTypeSelect(upperCasedCharacters);
+    }
+  }
 }
-}
+
+// Function for asking user about inclusion of different character types
+
+function characterTypeSelect(charset) {
+  var charDecision = confirm("Do you want to include " + charset + " ?");
+  if (charDecision === true) {
+    fullCharSet = fullCharSet.concat(charset);
+    alert(charset + " will be generated in the password.")
+  } else return
 }
 
 // Function for getting a random element from an array
 
-var randomArrElement = function(arr) { 
- return arr[Math.floor(Math.random() * arr.length)]
-  ;
+var randomArrElement = function (arr) {
+  return arr[Math.floor(Math.random() * arr.length)]
+    ;
 }
 
 // Function to generate password with user input
 function generatePassword() {
-
+  getPasswordOptions()
 }
 
 // Get references to the #generate element
