@@ -28,7 +28,7 @@ A prompt box will appear asking for the password length in characters. Enter des
 
 Confirm or deny each of the lower-case, upper-case, numeric and special character sets to be included in the password when prompted. 
 
-NOTE: At least once character set must be confirmed to produce a password.
+NOTE: At least one character set must be confirmed to produce a password.
 
 An alert will inform that the password has been generated. The password will now be visible on the webpage, where it can be copied to the clipboard for use. 
 
