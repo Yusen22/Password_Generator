@@ -90,12 +90,21 @@ var upperCasedCharacters = [
 
 // Function to prompt user for password options
 function getPasswordOptions() {
-
+var passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.")
+if passwordLength < 10 {
+  alert("This password has too few characters. Please enter another value.")
+  passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.")
+} else if passwordLength > 64 {
+  alert("This password has too many characters. Please enter another value.")
+}
+}
 }
 
 // Function for getting a random element from an array
-function getRandom(arr) {
 
+var randomArrElement = function(arr) { 
+ return arr[Math.floor(Math.random() * arr.length)]
+  ;
 }
 
 // Function to generate password with user input
