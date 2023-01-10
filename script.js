@@ -91,7 +91,7 @@ var characters = {
   ],
 }
 
-var fullCharSet = []
+
 
 // Function to prompt user for password options
 function getPasswordOptions() {
@@ -109,7 +109,7 @@ function getPasswordOptions() {
 
 // Function for asking user about inclusion of different character types
 
-
+var fullCharSet = []
 var listProperty = Object.keys(characters);
 
 
@@ -118,13 +118,18 @@ function characterTypeSelect() {
     var charTitle = listProperty.shift();
     var editedCharTitle = charTitle.replace(/[A-Z]/g, ' $&').trim().toLowerCase();
     var charDecision = confirm("Do you want to include " + editedCharTitle + " ?");
-    //   if (charDecision === true) {
-    //     fullCharSet = fullCharSet.concat(characters[i]);
-    //     alert(characters[i] + " will be generated in the password.")
-    //   } else return
-    // }
+    if (charDecision === true) {
+      fullCharSet = fullCharSet.concat(characters[i]);
+      var capCharTitle =
+        editedCharTitle.charAt(0).toUpperCase()
+        + editedCharTitle.slice(1)
+      alert(capCharTitle + " will be generated in the password.")
+    } else if (charDecision === false) {
+      continue
+    }
   }
 }
+
 
 // Function for getting a random element from an array
 
@@ -135,7 +140,8 @@ var randomArrElement = function (arr) {
 
 // Function to generate password with user input
 function generatePassword() {
-  getPasswordOptions()
+  getPasswordOptions();
+  randomArrElement(fullCharSet);
 }
 
 // Get references to the #generate element
