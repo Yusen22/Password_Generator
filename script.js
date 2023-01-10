@@ -91,41 +91,46 @@ var characters = {
   ],
 }
 
-
-
-// Function to prompt user for password options
-function getPasswordOptions() {
-  passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
-  if (passwordLength < 10) {
-    alert("This password has too few characters. Please enter another value.");
-    passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
-  } else if (passwordLength > 64) {
-    alert("This password has too many characters. Please enter another value.");
-    passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
-  } else if (passwordLength === null) {
-    return getPasswordOptions()
-  }
-  else {
-    characterTypeSelect();
-    if (fullCharSet.length < 1) {
-      alert("You must select one character type. Please try again.");
-    } else {
-      alert("Your password will now be generated.")
-    }
-  }
-}
-
-// Function for asking user about inclusion of different character types
 var passwordLength
 var fullCharSet = []
 var listProperty = Object.keys(characters);
 var fullPassword = ""
 
 
+
+
+// Function to prompt user for password options
+function getPasswordOptions() {
+  passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
+  if (passwordLength < 10 && passwordLength > 0) {
+    alert("This password has too few characters. Try again!");
+    passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
+  } else if (passwordLength > 64) {
+    alert("This password has too many characters. Please enter another value.");
+    passwordLength = prompt("How many characters should the password contain? Must be between 10 & 64 characters.");
+  } else if (passwordLength === undefined) {
+    return false;
+  }
+  else {
+    characterTypeSelect();
+    if (fullCharSet.length < 1) {
+      alert("You must select one character type. Please try again.");
+      return;
+    } else {
+      alert("Your password will now be generated.")
+    }
+  }
+}
+
+// Function for asking user about inclusion of different character types and using titles of each property in the object
+
+
 function characterTypeSelect() {
   for (let i in characters) {
+    // This code is for the use of the name of each property
     var charTitle = listProperty.shift();
     var editedCharTitle = charTitle.replace(/[A-Z]/g, ' $&').trim().toLowerCase();
+    // Code for decision on each character set and adding to fullCharSet array
     var charDecision = confirm("Do you want to include " + editedCharTitle + " ?");
     if (charDecision === true) {
       fullCharSet = fullCharSet.concat(characters[i]);
@@ -140,21 +145,22 @@ function characterTypeSelect() {
 }
 
 
-// Function for getting a random element from an array
+// Function for selecting a random element in an array
 
 var randomArrElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)]
     ;
 }
 
-// Function to generate password with user input
+// Function to generate password with user input using fullCharSet array
 function generatePassword() {
   getPasswordOptions();
   for (var x = 0; x <= passwordLength; x++) {
     fullPassword += randomArrElement(fullCharSet);
   }
   console.log(fullPassword);
-  return fullPassword
+  return fullPassword;
+
 }
 
 // Get references to the #generate element
